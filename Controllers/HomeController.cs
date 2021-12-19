@@ -28,7 +28,7 @@ namespace TilausDBWebApp.Controllers
             }
             else
             {
-                ViewBag.Message = "Yhtiön Careeria tietoja.";
+                ViewBag.Message = "Tietoja.";
 
                 return View();
             }

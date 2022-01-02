@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TilausDBWebApp.Models;
+using System.Data.Entity;
 
 namespace TilausDBWebApp.Controllers
 {
@@ -20,28 +21,26 @@ namespace TilausDBWebApp.Controllers
             }
             else
             {
-                //TilausDBEntities db = new TilausDBEntities();
-                List<Asiakkaat> model = db.Asiakkaat.ToList();
-                db.Dispose();
-                return View(model);
+                var asiakkaat = db.Asiakkaat.Include(a => a.Postitoimipaikat);
+                ViewBag.LoggedStatus = "In";
+                ViewBag.AsiakasID = new SelectList(db.Asiakkaat, "AsiakasID", "Nimi");
+                return View(asiakkaat.ToList());
             }
         }
 
         public ActionResult Create()
         {
-            //ViewBag.RegionID = new SelectList(db.Region, "RegionID", "RegionDescription");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AsiakasID,Nimi,Osoite")] Asiakkaat asiakas)
+        public ActionResult Create([Bind(Include = "AsiakasID,Nimi,Osoite,Postinumero")] Asiakkaat asiakas)
         {
             if (ModelState.IsValid)
             {
                 db.Asiakkaat.Add(asiakas);
                 db.SaveChanges();
-                //ViewBag.RegionID = new SelectList(db.Region, "RegionID", "RegionDescription");
                 return RedirectToAction("Index");
             }
             return View(asiakas);
@@ -63,6 +62,28 @@ namespace TilausDBWebApp.Controllers
             db.Asiakkaat.Remove(asiakkaat);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)                   // Linkkipyyntö edittiin
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Asiakkaat asiakkaat = db.Asiakkaat.Find(id);
+            if (asiakkaat == null) return HttpNotFound();    // Jos ei löydy, palautetaan HttpNotFound
+            return View(asiakkaat);                          // Jos löytyy palautetaan näkymä
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken] //Katso https://go.microsoft.com/fwlink/?LinkId=317598
+        public ActionResult Edit([Bind(Include = "AsiakasID, Nimi, Osoite, Postinumero")] Asiakkaat asiakas)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(asiakas).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(asiakas);
         }
     }
 }

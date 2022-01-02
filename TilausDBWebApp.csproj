@@ -128,6 +128,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Models\Asiakkaat.cs">
       <DependentUpon>TilausDB.tt</DependentUpon>
     </Compile>
@@ -228,6 +229,10 @@
     <Content Include="Views\Customers\Create.cshtml" />
     <Content Include="Views\Customers\Delete.cshtml" />
     <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

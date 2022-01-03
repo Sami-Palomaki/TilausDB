@@ -9,10 +9,10 @@ using TilausDBWebApp.Models;
 
 namespace TilausDBWebApp.Controllers
 {
-    public class OrdersController : Controller
+    public class OrderlinesController : Controller
     {
+        // GET: Orderlines
         TilausDBEntities db = new TilausDBEntities();
-        // GET: Products
         public ActionResult Index()
         {
             if (Session["UserName"] == null)
@@ -21,30 +21,26 @@ namespace TilausDBWebApp.Controllers
             }
             else
             {
-                List<Tilaukset> model = db.Tilaukset.ToList();
+                List<Tilausrivit> model = db.Tilausrivit.ToList();
                 db.Dispose();
                 return View(model);
-                //var tilaukset = db.Tilaukset.Include(t => t.Tilausrivit);
-                //ViewBag.LoggedStatus = "In";
-                //ViewBag.TilausID = new SelectList(db.Tilaukset, "TilausID", "AsiakasID");
-                //return View(tilaukset.ToList());
             }
         }
 
         public ActionResult Delete(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Tilaukset tilaukset = db.Tilaukset.Find(id);
-            if (tilaukset == null) return HttpNotFound();
-            return View(tilaukset);
+            Tilausrivit tilausrivit = db.Tilausrivit.Find(id);
+            if (tilausrivit == null) return HttpNotFound();
+            return View(tilausrivit);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tilaukset tilaukset = db.Tilaukset.Find(id);
-            db.Tilaukset.Remove(tilaukset);
+            Tilausrivit tilausrivit = db.Tilausrivit.Find(id);
+            db.Tilausrivit.Remove(tilausrivit);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -56,37 +52,37 @@ namespace TilausDBWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TilausID,AsiakasID,Toimitusosoite,Postinumero,Tilauspvm,Toimituspvm")] Tilaukset tilaus)
+        public ActionResult Create([Bind(Include = "TilausriviID,TilausID,TuoteID,Maara,Ahinta")] Tilausrivit tilausrivi)
         {
             if (ModelState.IsValid)
             {
-                db.Tilaukset.Add(tilaus);
+                db.Tilausrivit.Add(tilausrivi);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(tilaus);
+            return View(tilausrivi);
         }
 
         [HttpGet]
         public ActionResult Edit(int? id)                   // Linkkipyyntö edittiin
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Tilaukset tilaukset = db.Tilaukset.Find(id);
-            if (tilaukset == null) return HttpNotFound();    // Jos ei löydy, palautetaan HttpNotFound
-            return View(tilaukset);                          // Jos löytyy palautetaan näkymä
+            Tilausrivit tilausrivit = db.Tilausrivit.Find(id);
+            if (tilausrivit == null) return HttpNotFound();    // Jos ei löydy, palautetaan HttpNotFound
+            return View(tilausrivit);                          // Jos löytyy palautetaan näkymä
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken] //Katso https://go.microsoft.com/fwlink/?LinkId=317598
-        public ActionResult Edit([Bind(Include = "TilausID, AsiakasID, Toimitusosoite, Postinumero, Tilauspvm, Toimituspvm")] Tilaukset tilaus)
+        public ActionResult Edit([Bind(Include = "TilausriviID, TilausID, TuoteID, Maara, Ahinta")] Tilausrivit tilausrivi)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tilaus).State = EntityState.Modified;
+                db.Entry(tilausrivi).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(tilaus);
+            return View(tilausrivi);
         }
     }
 }

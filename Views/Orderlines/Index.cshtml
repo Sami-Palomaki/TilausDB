@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TilausDBWebApp.Models.Tilausrivit>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tilausrivit</h2>
+
+<p>
+    @Html.ActionLink("Lisää uusi", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TilausriviID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TilausID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TuoteID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Maara)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ahinta)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TilausriviID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TilausID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TuoteID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Maara)kpl
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ahinta)€
+            </td>
+            <td>
+                @Html.ActionLink("Muokkaa", "Edit", new { id = item.TilausriviID }) |
+                @Html.ActionLink("Poista", "Delete", new { id = item.TilausriviID })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -17,13 +17,17 @@ namespace TilausDBWebApp.Controllers
         {
             if (Session["UserName"] == null)
             {
+                ViewBag.LoggedStatus = "Out";
                 return RedirectToAction("login", "home");
             }
             else
             {
-                List<Tilausrivit> model = db.Tilausrivit.ToList();
-                db.Dispose();
-                return View(model);
+                ViewBag.LoggedStatus = "In";
+                //List<Tilausrivit> model = db.Tilausrivit.ToList();
+                //db.Dispose();
+                //return View(model);
+                var tilausrivit = db.Tilausrivit.Include(t => t.Tuotteet);          // TÄTÄ MUUTIN
+                return View(tilausrivit.ToList());
             }
         }
 
@@ -57,7 +61,14 @@ namespace TilausDBWebApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Tilausrivit.Add(tilausrivi);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    Console.WriteLine("VIRHE!");
+                }
                 return RedirectToAction("Index");
             }
             return View(tilausrivi);
@@ -69,6 +80,7 @@ namespace TilausDBWebApp.Controllers
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             Tilausrivit tilausrivit = db.Tilausrivit.Find(id);
             if (tilausrivit == null) return HttpNotFound();    // Jos ei löydy, palautetaan HttpNotFound
+            ViewBag.TuoteID = new SelectList(db.Tuotteet, "TuoteID");                                       //TÄMÄ LISÄTTIIN
             return View(tilausrivit);                          // Jos löytyy palautetaan näkymä
         }
 
@@ -79,7 +91,15 @@ namespace TilausDBWebApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(tilausrivi).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    Console.WriteLine("VIRHE!");
+                }
+                ViewBag.TuoteID = new SelectList(db.Tuotteet, "TuoteID");                                   //TÄMÄ LISÄTTIIN
                 return RedirectToAction("Index");
             }
             return View(tilausrivi);

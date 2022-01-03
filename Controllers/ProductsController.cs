@@ -21,7 +21,6 @@ namespace TilausDBWebApp.Controllers
             }
             else
             {
-                //TilausDBEntities db = new TilausDBEntities();
                 List<Tuotteet> model = db.Tuotteet.ToList();
                 db.Dispose();
                 return View(model);

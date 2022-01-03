@@ -61,7 +61,14 @@ namespace TilausDBWebApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Tilaukset.Add(tilaus);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    Console.WriteLine("VIRHE!");
+                }
                 return RedirectToAction("Index");
             }
             return View(tilaus);
@@ -83,7 +90,14 @@ namespace TilausDBWebApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(tilaus).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    Console.WriteLine("VIRHE!");
+                }
                 return RedirectToAction("Index");
             }
             return View(tilaus);

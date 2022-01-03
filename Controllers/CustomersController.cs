@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using TilausDBWebApp.Models;
 using System.Data.Entity;
+using System.Web.UI;
 
 namespace TilausDBWebApp.Controllers
 {

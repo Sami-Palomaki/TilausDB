@@ -21,6 +21,9 @@
             @Html.DisplayNameFor(model => model.TuoteID)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Tuotteet.Nimi)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Maara)
         </th>
         <th>
@@ -31,27 +34,30 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TilausriviID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TilausID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TuoteID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Maara)kpl
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ahinta)€
-            </td>
-            <td>
-                @Html.ActionLink("Muokkaa", "Edit", new { id = item.TilausriviID }) |
-                @Html.ActionLink("Poista", "Delete", new { id = item.TilausriviID })
-            </td>
-        </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.TilausriviID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TilausID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TuoteID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Tuotteet.Nimi)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Maara)kpl
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Ahinta)€
+    </td>
+    <td>
+        @Html.ActionLink("Muokkaa", "Edit", new { id = item.TilausriviID }) |
+        @Html.ActionLink("Poista", "Delete", new { id = item.TilausriviID })
+    </td>
+</tr>
     }
 
 </table>

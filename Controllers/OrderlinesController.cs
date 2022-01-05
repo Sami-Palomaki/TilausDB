@@ -89,7 +89,7 @@ namespace TilausDBWebApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(tilausrivi).State = EntityState.Modified;
-                db.SaveChanges();    
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(tilausrivi);

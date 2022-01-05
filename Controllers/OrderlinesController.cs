@@ -78,6 +78,10 @@ namespace TilausDBWebApp.Controllers
             var tuoteIDSelectList = new SelectList(tuoteIDt);
             ViewData["TuoteIDt"] = tuoteIDSelectList;
 
+            var tilausIDt = db.Tilausrivit.Select(t => t.TilausID).ToList();
+            var tilausIDSelectList = new SelectList(tuoteIDt);
+            ViewData["TilausIDt"] = tilausIDSelectList;
+
             if (tilausrivit == null) return HttpNotFound();    // Jos ei löydy, palautetaan HttpNotFound
             return View(tilausrivit);                          // Jos löytyy palautetaan näkymä
         }

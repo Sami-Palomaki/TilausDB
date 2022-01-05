@@ -54,6 +54,9 @@ namespace TilausDBWebApp.Controllers
 
         public ActionResult Create()
         {
+            var asiakasNumerotCreate = db.Asiakkaat.Select(a => a.AsiakasID).ToList();
+            var asiakasNumerotSelectList = new SelectList(asiakasNumerotCreate);
+            ViewData["AsiakasNumerotCreate"] = asiakasNumerotSelectList;
             return View();
         }
 
@@ -82,6 +85,11 @@ namespace TilausDBWebApp.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             Tilaukset tilaukset = db.Tilaukset.Find(id);
+
+            var asiakasNumerot = db.Asiakkaat.Select(a => a.AsiakasID).ToList();
+            var asiakasNumerotSelectList = new SelectList(asiakasNumerot);
+            ViewData["AsiakasNumerot"] = asiakasNumerotSelectList;
+
             if (tilaukset == null) return HttpNotFound();    // Jos ei löydy, palautetaan HttpNotFound
             return View(tilaukset);                          // Jos löytyy palautetaan näkymä
         }

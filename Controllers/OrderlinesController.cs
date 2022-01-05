@@ -54,6 +54,7 @@ namespace TilausDBWebApp.Controllers
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TilausriviID,TilausID,TuoteID,Maara,Ahinta")] Tilausrivit tilausrivi)
@@ -79,8 +80,12 @@ namespace TilausDBWebApp.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             Tilausrivit tilausrivit = db.Tilausrivit.Find(id);
+
+            var tuoteIDt = db.Tuotteet.Select(t => t.TuoteID).ToList();
+            var tuoteIDSelectList = new SelectList(tuoteIDt);
+            ViewData["TuoteIDt"] = tuoteIDSelectList;
+
             if (tilausrivit == null) return HttpNotFound();    // Jos ei löydy, palautetaan HttpNotFound
-            ViewBag.TuoteID = new SelectList(db.Tuotteet, "TuoteID");                                       //TÄMÄ LISÄTTIIN
             return View(tilausrivit);                          // Jos löytyy palautetaan näkymä
         }
 
@@ -98,8 +103,7 @@ namespace TilausDBWebApp.Controllers
                 catch
                 {
                     Console.WriteLine("VIRHE!");
-                }
-                ViewBag.TuoteID = new SelectList(db.Tuotteet, "TuoteID");                                   //TÄMÄ LISÄTTIIN
+                }             
                 return RedirectToAction("Index");
             }
             return View(tilausrivi);

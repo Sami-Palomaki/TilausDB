@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <title>@ViewBag.Title - Koulutehtävä</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -23,8 +24,6 @@
                             <span class="visually-hidden">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item active"><a class="nav-link" href="~/Home/Login">Login <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item active"><a class="nav-link" href="~/Home/Logout">Logout <span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="~/Home/About">Tietoja</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/Customers/Index">Asiakkaat</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/Home/Contact">Yhteystiedot</a></li>
@@ -32,7 +31,16 @@
                     <li class="nav-item"><a class="nav-link" href="~/Orders/Index">Tilaukset</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/Orderlines/Index">Tilausrivit</a></li>
                 </ul>
+                <div class="dropdown show">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Kirjautuminen
+                    </a>
 
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="~/Home/Login">LogIn</a>
+                        <a class="dropdown-item" href="~/Home/Logout">LogOut</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -50,5 +58,7 @@
 
     <script src="https://bootswatch.com/_vendor/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
 </body>
 </html>

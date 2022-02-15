@@ -24,9 +24,10 @@ namespace TilausDBWebApp.Controllers
         {
             if (Session["UserName"] == null)
             {
+                ViewBag.LoggedStatus = "Out";
                 return RedirectToAction("login", "home");
             }
-            else
+            else ViewBag.LoggedStatus = "In";
             {
                 ViewBag.Message = "Tietoja.";
 
@@ -38,9 +39,10 @@ namespace TilausDBWebApp.Controllers
         {
             if (Session["UserName"] == null)
             {
+                ViewBag.LoggedStatus = "Out";
                 return RedirectToAction("login", "home");
             }
-            else
+            else ViewBag.LoggedStatus = "In";
             {
                 ViewBag.Message = "Yhteystietoja.";
                 ViewBag.UserName = Session["UserName"];

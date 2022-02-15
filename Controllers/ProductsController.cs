@@ -17,9 +17,10 @@ namespace TilausDBWebApp.Controllers
         {
             if (Session["UserName"] == null)
             {
+                ViewBag.LoggedStatus = "Out";
                 return RedirectToAction("login", "home");
             }
-            else
+            else ViewBag.LoggedStatus = "In";
             {
                 List<Tuotteet> model = db.Tuotteet.ToList();
                 db.Dispose();

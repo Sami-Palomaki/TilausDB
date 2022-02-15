@@ -7,7 +7,7 @@
 <h2>Tilaukset</h2>
 
 <p>
-    @Html.ActionLink("Lisää uusi", "Create")
+    <a class="btn btn-outline-primary fas fa-plus" style='color:black' href="~/Orders/Create/">Lisää uusi</a>
 </p>
 <table class="table">
     <tr>
@@ -54,8 +54,8 @@
         @Html.DisplayFor(modelItem => item.Toimituspvm)
     </td>
     <td>
-        @Html.ActionLink("Muokkaa", "Edit", new { id = item.TilausID }) |
-        @Html.ActionLink("Poista", "Delete", new { id = item.TilausID })
+        <a class="btn btn-outline-primary fas fa-edit" style='color:black' href="~/Orderlines/Edit/@item.TilausID">Muokkaa</a>
+        <a class="btn btn-outline-primary fas fa-trash-alt" style='color:black' href="~/Orderlines/Delete/@item.TilausID">Poista</a>
     </td>
 </tr>
     }

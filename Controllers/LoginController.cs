@@ -9,9 +9,15 @@ namespace TilausDBWebApp.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
         public ActionResult Index()
         {
+        if (Session["UserName"] == null)
+            {
+                ViewBag.LoggedStatus = "Out";
+            }
+            else ViewBag.LoggedStatus = "In";
+
+
             return View();
         }
 
@@ -23,6 +29,7 @@ namespace TilausDBWebApp.Controllers
 
             if (LoggedUser != null)
             {
+                ViewBag.LoggedStatus = "In";
                 ViewBag.LoginMessage = "Successfull login";
                 Session["UserName"] = LoggedUser.UserName;
                 return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa --> Home/Index
@@ -30,6 +37,7 @@ namespace TilausDBWebApp.Controllers
             }
             else
             {
+                ViewBag.LoggedStatus = "Out";
                 ViewBag.LoginMessage = "Login unsuccessfull";
                 LoginModel.LoginErrorMessage = "Tuntematon käyttäjätunnus tai salasana.";
 
@@ -41,11 +49,13 @@ namespace TilausDBWebApp.Controllers
         public ActionResult LogOut()
         {
             Session.Abandon();
-            return RedirectToAction("LoggedOut", "login");
+            ViewBag.LoggedStatus = "Out";
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult LoggedOut()
         {
+            //ViewBag.LoggedStatus = "Out";
             ViewBag.LoggedOut = "Olet kirjautunut ulos järjestelmästä.";
             return View(); //We have a special wiev LoggedOut which is a copy of Index, but has additional viewbag message of
                            //succesfull logout and possibility to login again.

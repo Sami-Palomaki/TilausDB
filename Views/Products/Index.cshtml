@@ -7,7 +7,7 @@
 <h2>Tuotteet</h2>
 
 <p>
-    @Html.ActionLink("Lisää uusi", "Create")
+    <a class="btn btn-outline-primary fas fa-plus" style='color:black' href="~/Products/Create/">Lisää uusi</a>
 </p>
 <table class="table">
     <tr>
@@ -36,8 +36,8 @@
                 @Html.DisplayFor(modelItem => item.Ahinta)€
             </td>
             <td>
-                @Html.ActionLink("Muokkaa", "Edit", new { id = item.TuoteID }) |
-                @Html.ActionLink("Poista", "Delete", new { id = item.TuoteID })
+                <a class="btn btn-outline-primary fas fa-edit" style='color:black' href="~/Orderlines/Edit/@item.TuoteID">Muokkaa</a>
+                <a class="btn btn-outline-primary fas fa-trash-alt" style='color:black' href="~/Orderlines/Delete/@item.TuoteID">Poista</a>
             </td>
         </tr>
     }

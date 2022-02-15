@@ -54,9 +54,20 @@ namespace TilausDBWebApp.Controllers
 
         public ActionResult Create()
         {
-            var asiakasNumerotCreate = db.Asiakkaat.Select(a => a.AsiakasID).ToList();
-            var asiakasNumerotSelectList = new SelectList(asiakasNumerotCreate);
-            ViewData["AsiakasNumerotCreate"] = asiakasNumerotSelectList;
+            //var asiakasNumerotCreate = db.Asiakkaat.Select(a => a.AsiakasID).ToList();
+            //var asiakasNumerotSelectList = new SelectList(asiakasNumerotCreate);
+            //ViewData["AsiakasNumerotCreate"] = asiakasNumerotSelectList;
+            //return View();
+            var posti = db.Postitoimipaikat;
+            IEnumerable<SelectListItem> selectPostiList = from p in posti
+                                                          select new SelectListItem
+                                                          {
+                                                              Value = p.Postinumero.ToString(),
+                                                              Text = p.Postinumero + " " + p.Postitoimipaikka.ToString()
+                                                          };
+
+            ViewBag.PostiID = new SelectList(selectPostiList, "Value", "Text");
+
             return View();
         }
 

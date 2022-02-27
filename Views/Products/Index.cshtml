@@ -4,42 +4,42 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Tuotteet</h2>
+<h2>Index</h2>
 
 <p>
-    <a class="btn btn-outline-primary fas fa-plus" style='color:black' href="~/Products/Create/">Lisää uusi</a>
+    @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
+{
+    <div class="input-group">
+        <p class="px-1">@Html.Label("Find by name:")</p>
+        <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form control" })</p>
+        <p class="px-1"><input type="submit" value="Search" class="form-control" /></p>
+    </div>
+}
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TuoteID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nimi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ahinta)
-        </th>
+        <th>@Html.ActionLink("Tuotteen nimi", "Index", new { sortOrder = ViewBag.ProductNameSortParm })</th>
+        @*<th>@Html.DisplayNameFor(model => model.Nimi)</th>*@
+        <th>@Html.ActionLink("A-hinta", "Index", new { sortOrder = ViewBag.UnitPriceSortParm })</th>
+        @*<th>@Html.DisplayNameFor(model => model.Ahinta)</th>*@
+        <th>@Html.DisplayNameFor(model => model.Kuva)</th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TuoteID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nimi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ahinta)€
-            </td>
-            <td>
-                <a class="btn btn-outline-primary fas fa-edit" style='color:black' href="~/Orderlines/Edit/@item.TuoteID">Muokkaa</a>
-                <a class="btn btn-outline-primary fas fa-trash-alt" style='color:black' href="~/Orderlines/Delete/@item.TuoteID">Poista</a>
-            </td>
-        </tr>
-    }
+@foreach (var item in Model) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.Nimi)</td>
+        <td>@Html.DisplayFor(modelItem => item.Ahinta)</td>
+        <td>@Html.DisplayFor(modelItem => item.Kuva)</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TuoteID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TuoteID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TuoteID })
+        </td>
+    </tr>
+}
 
 </table>

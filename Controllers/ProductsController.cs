@@ -13,8 +13,10 @@ namespace TilausDBWebApp.Controllers
     {
         TilausDBEntities db = new TilausDBEntities();
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString1)
         {
+
+
             if (Session["UserName"] == null)
             {
                 ViewBag.LoggedStatus = "Out";
@@ -22,9 +24,36 @@ namespace TilausDBWebApp.Controllers
             }
             else ViewBag.LoggedStatus = "In";
             {
-                List<Tuotteet> model = db.Tuotteet.ToList();
-                db.Dispose();
-                return View(model);
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.ProductNameSortParm = String.IsNullOrEmpty(sortOrder) ? "productname_desc" : "";
+                ViewBag.UnitPriceSortParm = sortOrder == "Ahinta" ? "unitprice_desc" : "Ahinta";
+
+                //List<Tuotteet> model = db.Tuotteet.ToList();
+                //db.Dispose();
+                var tuotteet = from p in db.Tuotteet
+                               select p;
+
+                if (!String.IsNullOrEmpty(searchString1))
+                {
+                    tuotteet = tuotteet.Where(p => p.Nimi.Contains(searchString1));
+                }
+
+                switch (sortOrder)
+                {
+                    case "productname_desc":
+                        tuotteet = tuotteet.OrderByDescending(p => p.Nimi);
+                        break;
+                    case "Ahinta":
+                        tuotteet = tuotteet.OrderBy(p => p.Ahinta);
+                        break;
+                    case "unitprice_desc":
+                        tuotteet = tuotteet.OrderByDescending(p => p.Ahinta);
+                        break;
+                    default:
+                        tuotteet = tuotteet.OrderBy(p => p.Nimi);
+                        break;
+                }
+                return View(tuotteet);
             }
         }
 

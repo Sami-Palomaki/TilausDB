@@ -6,6 +6,28 @@
     <br>
     <h1>TilausDB - ASP.NET MVC sovellusten toteuttaminen jatkokurssi</h1>
     <p class="lead">Tällaista työtä teemme Careeriassa.</p>
+
+    @*Modal -tyyppisen ikkunan avauspainike*@
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginRuutu">Kirjautuminen</button>
+
+    @*Modal -tyyppisen ikkunan koodiesimerkki*@
+    <div class="modal" id="LoginRuutu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1> Kirjautuminen Northwind-järjestelmään</h1>
+                </div>
+                <div class="modal-body">
+                    <p>Tässä voi luetella mitä haluaa</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Kirjaudu</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Peruuta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="row">

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TilausDBWebApp.Models.Tuotteet>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tuotteet</h2>
+
+<p>
+    <a class="btn btn-outline-primary fas fa-plus" style='color:black' href="~/Products/Create/">Lisää uusi</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TuoteID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nimi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ahinta)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TuoteID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nimi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ahinta)€
+            </td>
+            <td>
+                <a class="btn btn-outline-primary fas fa-edit" style='color:black' href="~/Orderlines/Edit/@item.TuoteID">Muokkaa</a>
+                <a class="btn btn-outline-primary fas fa-trash-alt" style='color:black' href="~/Orderlines/Delete/@item.TuoteID">Poista</a>
+            </td>
+        </tr>
+    }
+
+</table>

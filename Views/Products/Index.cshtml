@@ -1,4 +1,7 @@
-﻿@model IEnumerable<TilausDBWebApp.Models.Tuotteet>
+﻿@*@model IEnumerable<TilausDBWebApp.Models.Tuotteet>*@
+@model PagedList.IPagedList<TilausDBWebApp.Models.Tuotteet>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -25,7 +28,7 @@
         @*<th>@Html.DisplayNameFor(model => model.Nimi)</th>*@
         <th>@Html.ActionLink("A-hinta", "Index", new { sortOrder = ViewBag.UnitPriceSortParm })</th>
         @*<th>@Html.DisplayNameFor(model => model.Ahinta)</th>*@
-        <th>@Html.DisplayNameFor(model => model.Kuva)</th>
+        <th>Kuva</th>
         <th></th>
     </tr>
 
@@ -43,3 +46,7 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1}))

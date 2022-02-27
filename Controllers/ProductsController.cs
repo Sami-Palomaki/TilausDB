@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace TilausDBWebApp.Controllers
     {
         TilausDBEntities db = new TilausDBEntities();
         // GET: Products
-        public ActionResult Index(string sortOrder, string searchString1)
+        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, int? page, int? pagesize)
         {
 
 
@@ -28,6 +29,15 @@ namespace TilausDBWebApp.Controllers
                 ViewBag.ProductNameSortParm = String.IsNullOrEmpty(sortOrder) ? "productname_desc" : "";
                 ViewBag.UnitPriceSortParm = sortOrder == "Ahinta" ? "unitprice_desc" : "Ahinta";
 
+                if (searchString1 != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString1 = currentFilter1;
+                }
+                
                 //List<Tuotteet> model = db.Tuotteet.ToList();
                 //db.Dispose();
                 var tuotteet = from p in db.Tuotteet
@@ -53,7 +63,10 @@ namespace TilausDBWebApp.Controllers
                         tuotteet = tuotteet.OrderBy(p => p.Nimi);
                         break;
                 }
-                return View(tuotteet);
+
+                int pageSize = (pagesize ?? 10); //Tämä palauttaa sivukoon taikka jos pagesize on null, niin palauttaa koon 10 riviä per sivu
+                int pageNumber = (page ?? 1); // Tämä palauttaa sivunumeron taikka jos page on null, niin palauttaa numeron yksi
+                return View(tuotteet.ToPagedList(pageNumber, pageSize));
             }
         }
 

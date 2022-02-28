@@ -11,6 +11,7 @@ namespace TilausDBWebApp.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.LoginError = 0; //Ei virhettä...
             return View();
         }
 
@@ -53,7 +54,7 @@ namespace TilausDBWebApp.Controllers
                 ViewBag.LoginMessage = "Login unsuccessfull";
                 ViewBag.LoggedStatus = "Out";
                 ViewBag.LoginError = 1;     //Pakotetaan modaali login-ruutu uudelleen, koska kirjautumisyritys on epäonnistunut
-                //LoginModel.LoginErrorMessage = "Tuntematon käyttäjätunnus tai salasana.";
+                LoginModel.LoginErrorMessage = "Tuntematon käyttäjätunnus tai salasana.";
                 return View("Index", LoginModel);
             }
         }

@@ -1,9 +1,11 @@
 ﻿@model TilausDBWebApp.Models.Logins
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Pääsy estetty!";
 }
-<h2>Login</h2>
-@using (Html.BeginForm("Authorize", "Home", FormMethod.Post))
+<br />
+<br />
+<h2>Kirjaudu sisään!</h2>
+@*@using (Html.BeginForm("Authorize", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
@@ -34,4 +36,4 @@
             </div>
         </div>
     </div>
-}
+}*@

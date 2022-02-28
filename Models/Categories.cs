@@ -12,22 +12,21 @@ namespace TilausDBWebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tuotteet
+    public partial class Categories
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tuotteet()
+        public Categories()
         {
-            this.Tilausrivit = new HashSet<Tilausrivit>();
+            this.Tuotteet = new HashSet<Tuotteet>();
         }
     
-        public int TuoteID { get; set; }
-        public string Nimi { get; set; }
-        public Nullable<decimal> Ahinta { get; set; }
-        public byte[] Kuva { get; set; }
-        public Nullable<int> CategoryID { get; set; }
-    
-        public virtual Categories Categories { get; set; }
+        public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
+        public string Description { get; set; }
+        public byte[] Picture { get; set; }
+        public string CategoryIDCategoryName { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tilausrivit> Tilausrivit { get; set; }
+        public virtual ICollection<Tuotteet> Tuotteet { get; set; }
     }
 }

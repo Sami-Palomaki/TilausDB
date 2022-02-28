@@ -13,8 +13,7 @@ namespace TilausDBWebApp.Controllers
     public class ProductsController : Controller
     {
         TilausDBEntities db = new TilausDBEntities();
-        // GET: Products
-        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, int? page, int? pagesize)
+        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, string ProductCategory, string currentProductCategory, int? page, int? pagesize)
         {
 
 
@@ -29,7 +28,7 @@ namespace TilausDBWebApp.Controllers
                 ViewBag.ProductNameSortParm = String.IsNullOrEmpty(sortOrder) ? "productname_desc" : "";
                 ViewBag.UnitPriceSortParm = sortOrder == "Ahinta" ? "unitprice_desc" : "Ahinta";
 
-                if (searchString1 != null)
+                if (searchString1 != null)                  // Hakufiltterin laitto muistiin
                 {
                     page = 1;
                 }
@@ -37,32 +36,109 @@ namespace TilausDBWebApp.Controllers
                 {
                     searchString1 = currentFilter1;
                 }
-                
+
+                ViewBag.currentFilter1 = searchString1;
+
+                if ((ProductCategory != null) && (ProductCategory != "0"))
+                {
+                    page = 1;
+                }
+                else
+                {
+                    ProductCategory = currentProductCategory;
+                }
+
+                ViewBag.currentProductCategory = ProductCategory;
+
                 //List<Tuotteet> model = db.Tuotteet.ToList();
                 //db.Dispose();
                 var tuotteet = from p in db.Tuotteet
                                select p;
 
-                if (!String.IsNullOrEmpty(searchString1))
-                {
-                    tuotteet = tuotteet.Where(p => p.Nimi.Contains(searchString1));
+                //Tehdään tässä kohden haku tuoteryhmällä, jos se on asettettu käyttöliittymässä <-- seuraavat haut tarkentavat tätä tulosjoukkoa
+                if (!String.IsNullOrEmpty(ProductCategory) && (ProductCategory != "0"))
+                    {
+                    int para = int.Parse(ProductCategory);
+                    tuotteet = tuotteet.Where(p => p.CategoryID == para);
                 }
 
-                switch (sortOrder)
+                if (!String.IsNullOrEmpty(searchString1))   //Jos hakufiltteri on käytössä, niin käytetään sitä ja sen lisäksi lajitellaan tulokset                {
                 {
-                    case "productname_desc":
-                        tuotteet = tuotteet.OrderByDescending(p => p.Nimi);
-                        break;
-                    case "Ahinta":
-                        tuotteet = tuotteet.OrderBy(p => p.Ahinta);
-                        break;
-                    case "unitprice_desc":
-                        tuotteet = tuotteet.OrderByDescending(p => p.Ahinta);
-                        break;
-                    default:
-                        tuotteet = tuotteet.OrderBy(p => p.Nimi);
-                        break;
+                    switch (sortOrder)
+                    {
+                        case "productname_desc":
+                            tuotteet = tuotteet.Where(p => p.Nimi.Contains(searchString1)).OrderByDescending(p => p.Nimi);
+                            break;
+                        case "Ahinta":
+                            tuotteet = tuotteet.Where(p => p.Nimi.Contains(searchString1)).OrderBy(p => p.Ahinta);
+                            break;
+                        case "unitprice_desc":
+                            tuotteet = tuotteet.Where(p => p.Nimi.Contains(searchString1)).OrderByDescending(p => p.Ahinta);
+                            break;
+                        default:
+                            tuotteet = tuotteet.Where(p => p.Nimi.Contains(searchString1)).OrderBy(p => p.Nimi);
+                            break;
+                    }
                 }
+                else if (!String.IsNullOrEmpty(ProductCategory) && (ProductCategory != "0")) //Jos käytössä on tuoteryhmärajaus, niin käytetään sitä ja sen lisäksi lajitellaan tulokset
+                {
+                    int para = int.Parse(ProductCategory);
+                    switch (sortOrder)
+                    {
+                        case "productname_desc":
+                            tuotteet = tuotteet.Where(p => p.CategoryID == para).OrderByDescending(p => p.Nimi);
+                            break;
+                        case "Ahinta":
+                            tuotteet = tuotteet.Where(p => p.CategoryID == para).OrderBy(p => p.Ahinta);
+                            break;
+                        case "unitprice_desc":
+                            tuotteet = tuotteet.Where(p => p.CategoryID == para).OrderByDescending(p => p.Ahinta);
+                            break;
+                        default:
+                            tuotteet = tuotteet.Where(p => p.CategoryID == para).OrderBy(p => p.Nimi);
+                            break;
+                    }
+                }
+                else
+                { //Tässä hakufiltteri EI OLE käytössä, joten lajitellaan koko tulosjoukko ilman suodatuksia
+                    switch (sortOrder)
+                    {
+                        case "productname_desc":
+                            tuotteet = tuotteet.OrderByDescending(p => p.Nimi);
+                            break;
+                        case "Ahinta":
+                            tuotteet = tuotteet.OrderBy(p => p.Ahinta);
+                            break;
+                        case "unitprice_desc":
+                            tuotteet = tuotteet.OrderByDescending(p => p.Ahinta);
+                            break;
+                        default:
+                            tuotteet = tuotteet.OrderBy(p => p.Nimi);
+                            break;
+                    }
+                };
+
+                List<Categories> lstCategories = new List<Categories>();
+
+                var categoryList = from cat in db.Categories
+                                   select cat;
+
+                Categories tyhjaCategory = new Categories();
+                tyhjaCategory.CategoryID = 0;
+                tyhjaCategory.CategoryName = "";
+                tyhjaCategory.CategoryIDCategoryName = "";
+                lstCategories.Add(tyhjaCategory);
+
+                foreach (Categories category in categoryList)
+                {
+                    Categories yksiCategory = new Categories();
+                    yksiCategory.CategoryID = category.CategoryID;
+                    yksiCategory.CategoryName = category.CategoryName;
+                    yksiCategory.CategoryIDCategoryName = category.CategoryID.ToString() + " - " + category.CategoryName;
+                    //Taulun luokkamääritykseen Models-kansiossa piti lisätä tämä "uusi" kenttä = CategoryIDCategoryName
+                    lstCategories.Add(yksiCategory);
+                }
+                ViewBag.CategoryID = new SelectList(lstCategories, "CategoryID", "CategoryIDCategoryName", ProductCategory);
 
                 int pageSize = (pagesize ?? 10); //Tämä palauttaa sivukoon taikka jos pagesize on null, niin palauttaa koon 10 riviä per sivu
                 int pageNumber = (page ?? 1); // Tämä palauttaa sivunumeron taikka jos page on null, niin palauttaa numeron yksi

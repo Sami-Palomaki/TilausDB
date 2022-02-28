@@ -11,43 +11,22 @@ namespace TilausDBWebApp.Controllers
     {
         public ActionResult Index()
         {
-            if (Session["UserName"] == null)
-            {
-                ViewBag.LoggedStatus = "Out";
-                return RedirectToAction("login", "home");
-            }
-            else ViewBag.LoggedStatus = "In";
+            ViewBag.LoginError = 0; //Ei virhettä...
             return View();
         }
 
         public ActionResult About()
         {
-            if (Session["UserName"] == null)
-            {
-                ViewBag.LoggedStatus = "Out";
-                return RedirectToAction("login", "home");
-            }
-            else ViewBag.LoggedStatus = "In";
-            {
                 ViewBag.Message = "Tietoja.";
 
                 return View();
-            }
         }
 
         public ActionResult Contact()
         {
-            if (Session["UserName"] == null)
-            {
-                ViewBag.LoggedStatus = "Out";
-                return RedirectToAction("login", "home");
-            }
-            else ViewBag.LoggedStatus = "In";
-            {
-                ViewBag.Message = "Yhteystietoja.";
-                ViewBag.UserName = Session["UserName"];
-                return View();
-            }
+            ViewBag.Message = "Yhteystietoja.";
+
+            return View();
         }
 
         public ActionResult Login()
@@ -65,15 +44,18 @@ namespace TilausDBWebApp.Controllers
             {
                 ViewBag.LoginMessage = "Successfull login";
                 ViewBag.LoggedStatus = "In";
+                ViewBag.LoginError = 0; //Ei virhettä...
                 Session["UserName"] = LoggedUser.UserName;  // Perustetaan user-name sessio
+                Session["LoginID"] = LoggedUser.LoginId;
                 return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa --> Home/Index
             }
             else
             {
                 ViewBag.LoginMessage = "Login unsuccessfull";
                 ViewBag.LoggedStatus = "Out";
+                ViewBag.LoginError = 1;     //Pakotetaan modaali login-ruutu uudelleen, koska kirjautumisyritys on epäonnistunut
                 LoginModel.LoginErrorMessage = "Tuntematon käyttäjätunnus tai salasana.";
-                return View("Login", LoginModel);
+                return View("Index", LoginModel);
             }
         }
         public ActionResult LogOut()

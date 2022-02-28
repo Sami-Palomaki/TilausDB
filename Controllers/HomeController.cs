@@ -11,43 +11,21 @@ namespace TilausDBWebApp.Controllers
     {
         public ActionResult Index()
         {
-            //if (Session["UserName"] == null)
-            //{
-            //    ViewBag.LoggedStatus = "Out";
-            //    return RedirectToAction("login", "home");
-            //}
-            //else ViewBag.LoggedStatus = "In";
             return View();
         }
 
         public ActionResult About()
         {
-            //if (Session["UserName"] == null)
-            //{
-            //    ViewBag.LoggedStatus = "Out";
-            //    return RedirectToAction("login", "home");
-            //}
-            //else ViewBag.LoggedStatus = "In";
-            //{
                 ViewBag.Message = "Tietoja.";
 
                 return View();
-            }
         }
 
         public ActionResult Contact()
         {
-            //if (Session["UserName"] == null)
-            //{
-            //    ViewBag.LoggedStatus = "Out";
-            //    return RedirectToAction("login", "home");
-            //}
-            //else ViewBag.LoggedStatus = "In";
-            //{
-                ViewBag.Message = "Yhteystietoja.";
-                //ViewBag.UserName = Session["UserName"];
-                return View();
-            //}
+            ViewBag.Message = "Yhteystietoja.";
+
+            return View();
         }
 
         public ActionResult Login()

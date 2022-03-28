@@ -13,10 +13,10 @@ namespace TilausDBWebApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TilausDBEntities : DbContext
+    public partial class TilausDBEntities3 : DbContext
     {
-        public TilausDBEntities()
-            : base("name=TilausDBEntities")
+        public TilausDBEntities3()
+            : base("name=TilausDBEntities3")
         {
         }
     
@@ -27,6 +27,7 @@ namespace TilausDBWebApp.Models
     
         public virtual DbSet<Asiakkaat> Asiakkaat { get; set; }
         public virtual DbSet<Categories> Categories { get; set; }
+        public virtual DbSet<Employees> Employees { get; set; }
         public virtual DbSet<Henkilot> Henkilot { get; set; }
         public virtual DbSet<Logins> Logins { get; set; }
         public virtual DbSet<Postitoimipaikat> Postitoimipaikat { get; set; }

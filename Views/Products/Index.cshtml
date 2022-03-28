@@ -48,16 +48,17 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>@Html.DisplayFor(modelItem => item.Nimi)</td>
-        <td>@Html.DisplayFor(modelItem => item.Ahinta)</td>
-        <td>@Html.DisplayFor(modelItem => item.Kuva)</td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TuoteID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TuoteID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TuoteID })
-        </td>
-    </tr>
+<tr>
+    <td>@Html.DisplayFor(modelItem => item.Nimi)</td>
+    <td>@Html.DisplayFor(modelItem => item.Ahinta)</td>
+    <td>@Html.DisplayFor(modelItem => item.Kuva)</td>
+    <td>@Html.DisplayFor(modelItem => item.Categories.CategoryName)</td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.TuoteID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.TuoteID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.TuoteID })
+    </td>
+</tr>
 }
 
 </table>

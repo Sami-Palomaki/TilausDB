@@ -24,7 +24,7 @@ namespace TilausDBWebApp.Models
         public string Nimi { get; set; }
         public Nullable<decimal> Ahinta { get; set; }
         public byte[] Kuva { get; set; }
-        public Nullable<int> CategoryID { get; set; }
+        public int CategoryID { get; set; }
     
         public virtual Categories Categories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

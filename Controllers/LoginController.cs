@@ -24,7 +24,7 @@ namespace TilausDBWebApp.Controllers
         [HttpPost]
         public ActionResult Authorize(Logins LoginModel)
         {
-            TilausDBEntities db = new TilausDBEntities();
+            TilausDBEntities3 db = new TilausDBEntities3();
             var LoggedUser = db.Logins.SingleOrDefault(x => x.UserName == LoginModel.UserName && x.PassWord == LoginModel.PassWord); //Haetaan käyttäjän/Loginin tiedot annetuilla tunnustiedoilla tietokannasta LINQ -kyselyllä
 
             if (LoggedUser != null)

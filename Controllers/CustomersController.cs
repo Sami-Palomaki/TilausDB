@@ -13,7 +13,7 @@ namespace TilausDBWebApp.Controllers
     public class CustomersController : Controller
     {
         // GET: Customers
-        TilausDBEntities db = new TilausDBEntities();
+        TilausDBEntities3 db = new TilausDBEntities3();
         public ActionResult Index()
         {
             if (Session["UserName"] == null)

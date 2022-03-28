@@ -21,7 +21,7 @@
     <p class="lead">Tällaista työtä teemme Careeriassa.</p>
 
     @*Modal -tyyppisen ikkunan avauspainike*@
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginRuutu">Kirjautuminen</button>
+    @*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#LoginRuutu">Kirjautuminen</button>*@
 
     @*Modal -tyyppisen ikkunan koodiesimerkki*@
     <div class="modal" id="LoginRuutu">
@@ -56,11 +56,11 @@
                         <label class="field-validation-error">
                             @Html.DisplayFor(model => model.LoginErrorMessage)
                         </label>
-                        @*<div class="form-group">
+                        <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Log in to the system" class="btn btn-default" />
                             </div>
-                        </div>*@
+                        </div>
                     </div>
                     }
                 </div>

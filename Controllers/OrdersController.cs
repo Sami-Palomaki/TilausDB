@@ -14,16 +14,16 @@ namespace TilausDBWebApp.Controllers
 {
     public class OrdersController : Controller
     {
-        TilausDBEntities db = new TilausDBEntities();
-        // GET: Products
+        TilausDBEntities3 db = new TilausDBEntities3();
+
         public ActionResult Index()
         {
             if (Session["UserName"] == null)
             {
-                ViewBag.LoggedStatus = "Out";
+                //ViewBag.LoggedStatus = "Out";
                 return RedirectToAction("login", "home");
             }
-            else ViewBag.LoggedStatus = "In";
+            else /*ViewBag.LoggedStatus = "In";*/
             {
                 List<Tilaukset> model = db.Tilaukset.ToList();
                 db.Dispose();
@@ -125,5 +125,10 @@ namespace TilausDBWebApp.Controllers
             }
             return View(tilaus);
         }
+
+        //public ActionResult TilausOtsikot()
+        //{
+        //    var orders = db.Tilaukset.Include(o => o.)
+        //}
     }
 }

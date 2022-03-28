@@ -12,7 +12,7 @@ namespace TilausDBWebApp.Controllers
 {
     public class ProductsController : Controller
     {
-        TilausDBEntities db = new TilausDBEntities();
+        TilausDBEntities3 db = new TilausDBEntities3();
         public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, string ProductCategory, string currentProductCategory, int? page, int? pagesize)
         {
 
